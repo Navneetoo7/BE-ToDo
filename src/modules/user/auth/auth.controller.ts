@@ -1,39 +1,43 @@
-import { Controller, Post, Body, HttpCode, HttpStatus } from '@nestjs/common';
+import { Body, Controller, Post } from '@nestjs/common';
+import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { AuthService } from './auth.service';
-import { CreateUserDto } from '../DTOs';
-import { ApiTags, ApiResponse, ApiOperation } from '@nestjs/swagger';
+import { SignupDto, LoginDto } from './DTOs';
 import { errorHandler, successHandler } from 'src/common/function';
 
 @ApiTags('Auth')
-@Controller('auth')
+@Controller({ path: 'auth', version: '1' })
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   @Post('signup')
-  @ApiOperation({ summary: 'Sign up a new user' })
-  @ApiResponse({ status: 201, description: 'User signed up successfully' })
-  @ApiResponse({ status: 400, description: 'Bad Request' })
-  async signUp(@Body() createUserDto: CreateUserDto): Promise<any> {
+  @ApiOperation({ summary: 'Register a new user' })
+  @ApiResponse({
+    status: 201,
+    description: 'User registered successfully',
+    type: SignupDto,
+  })
+  async signup(@Body() signupDto: SignupDto) {
     try {
-      const user = await this.authService.signUp(createUserDto);
-      return successHandler(user, 'User signed up successfully');
+      const user = await this.authService.signup(signupDto);
+      return successHandler(user, 'User registered successfully');
     } catch (e) {
-      errorHandler(e);
+      return errorHandler(e);
     }
   }
 
-  @HttpCode(HttpStatus.OK)
   @Post('login')
-  @ApiOperation({ summary: 'Login user' })
-  @ApiResponse({ status: 200, description: 'User logged in successfully' })
-  @ApiResponse({ status: 401, description: 'Unauthorized' })
-  async login(@Body() signInDto: Record<string, any>): Promise<any> {
+  @ApiOperation({ summary: 'Login to get access token' })
+  @ApiResponse({
+    status: 200,
+    description: 'Login successful',
+    type: String, // Access token response
+  })
+  async login(@Body() loginDto: LoginDto) {
     try {
-      const { email, password } = signInDto;
-      const res = await this.authService.login(email, password);
-      return successHandler(res, 'User logged in successfully');
+      const token = await this.authService.login(loginDto);
+      return successHandler(token, 'Login successful');
     } catch (e) {
-      errorHandler(e);
+      return errorHandler(e);
     }
   }
 }

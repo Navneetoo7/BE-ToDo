@@ -36,11 +36,7 @@ export class UserController {
   async create(@Body() createUserDto: CreateUserDto): Promise<any> {
     try {
       const user = await this.userService.create(createUserDto);
-      const res = plainToInstance(UserResponseDto, user, {
-        excludeExtraneousValues: true,
-        enableImplicitConversion: true,
-      });
-      return successHandler(res, 'User created successfully');
+      return successHandler(user, 'User created successfully');
     } catch (e) {
       errorHandler(e);
     }

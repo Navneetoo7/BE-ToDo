@@ -7,6 +7,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import typeorm from './config/typeorm';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { TaskModule } from './modules/task/task.module';
+import { JwtGlobalModule } from './jwt-global/jwt-global.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { TaskModule } from './modules/task/task.module';
     }),
     UserModule,
     TaskModule,
+    JwtGlobalModule,
   ],
   controllers: [AppController],
   providers: [AppService, AuditSubscriber],

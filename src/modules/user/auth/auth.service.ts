@@ -1,42 +1,61 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { UserService } from '../user.service';
+import { JwtService } from '@nestjs/jwt';
+import { SignupDto, LoginDto } from './DTOs';
 import * as bcrypt from 'bcrypt';
-import { CreateUserDto } from '../DTOs';
 
 @Injectable()
 export class AuthService {
-  constructor(private readonly userService: UserService) {}
+  constructor(
+    private readonly userService: UserService,
+    private readonly jwtService: JwtService,
+  ) {}
 
-  async signUp(createUserDto: CreateUserDto): Promise<any> {
-    const { password } = createUserDto;
-    const saltRounds = 10;
+  async signup(signupDto: SignupDto) {
+    const existingUser = await this.userService.findUserByEmail(
+      signupDto.email,
+    );
 
-    const hashedPassword = await bcrypt.hash(password, saltRounds);
+    if (existingUser) {
+      throw new UnauthorizedException('Email is already registered');
+    }
 
+    const hashedPassword = await bcrypt.hash(signupDto.password, 10);
     const user = await this.userService.create({
-      ...createUserDto,
+      ...signupDto,
       password: hashedPassword,
     });
 
-    return user;
+    const payload = { userId: user.id, email: user.email };
+    const token = this.jwtService.sign(payload);
+
+    return {
+      ...user,
+      access_token: token,
+    };
   }
 
-  async login(email: string, pass: string): Promise<any> {
-    const user = await this.userService.findUserByEmail(email);
+  async login(loginDto: LoginDto) {
+    const user = await this.userService.findUserByEmail(loginDto.email);
+
     if (!user) {
       throw new UnauthorizedException('Invalid credentials');
     }
 
-    const isMatch = await bcrypt.compare(pass, user.password);
-    if (!isMatch) {
+    const isPasswordValid = await bcrypt.compare(
+      loginDto.password,
+      user.password,
+    );
+
+    if (!isPasswordValid) {
       throw new UnauthorizedException('Invalid credentials');
     }
 
-    const payload = { sub: user.id, email: user.email };
-    return payload;
+    const payload = { userId: user.id, email: user.email };
+    const token = this.jwtService.sign(payload);
 
-    // return {
-    //   access_token: await this.jwtService.signAsync(payload),
-    // };
+    return {
+      access_token: token,
+    };
   }
 }
