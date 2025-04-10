@@ -10,11 +10,14 @@ export class TaskService {
   constructor(
     @InjectRepository(TaskEntity)
     private taskRepository: Repository<TaskEntity>,
-  ) {}
+  ) { }
 
-  async create(createTaskDto: CreateTaskDto): Promise<TaskEntity> {
+  async create(
+    createTaskDto: CreateTaskDto,
+    userId: string,
+  ): Promise<TaskEntity> {
     const task = this.taskRepository.create(createTaskDto);
-    task.user = { id: createTaskDto.userId } as any;
+    task.user = { id: userId } as any;
     return this.taskRepository.save(task);
   }
 

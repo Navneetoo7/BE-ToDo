@@ -30,7 +30,7 @@ export class AuthController {
   @ApiResponse({
     status: 200,
     description: 'Login successful',
-    type: String, // Access token response
+    type: String,
   })
   async login(@Body() loginDto: LoginDto) {
     try {

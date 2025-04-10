@@ -50,9 +50,4 @@ export class CreateTaskDto {
   @IsOptional()
   @IsEnum(TaskPriority)
   priority?: TaskPriority;
-
-  @ApiProperty({ required: true })
-  @IsUUID()
-  @IsValidUser()
-  userId: string;
 }

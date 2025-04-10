@@ -10,6 +10,7 @@ import {
   ParseIntPipe,
   Patch,
   UseGuards,
+  Req,
 } from '@nestjs/common';
 import {
   ApiTags,
@@ -31,14 +32,14 @@ import { AuthGuard } from 'src/guard';
 @ApiBearerAuth('JWT-auth')
 @Controller({ path: 'tasks', version: '1' })
 export class TaskController {
-  constructor(private readonly taskService: TaskService) {}
+  constructor(private readonly taskService: TaskService) { }
 
   @Post()
   @ApiOperation({ summary: 'Create new task' })
   @ApiResponse({ status: 201, type: TaskResponseDto })
-  async create(@Body() createTaskDto: CreateTaskDto) {
+  async create(@Req() req, @Body() createTaskDto: CreateTaskDto) {
     try {
-      const task = await this.taskService.create(createTaskDto);
+      const task = await this.taskService.create(createTaskDto, req?.user.id);
       const res = plainToInstance(TaskResponseDto, task, {
         excludeExtraneousValues: true,
         enableImplicitConversion: true,
