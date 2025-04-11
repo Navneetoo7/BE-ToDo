@@ -25,7 +25,7 @@
 
 This is a NestJS-based ToDo application with a focus on clean architecture, robust data handling, and API documentation.
 
-user can run docker compose i have added db confir
+user can run docker compose i have added db config
 
 ## Key Features
 
@@ -37,6 +37,15 @@ user can run docker compose i have added db confir
 - **Base Entity**:  Abstract BaseEntity with timestamp and user tracking for auditing.
 - **Soft Deletes**: Implements soft delete functionality.
 - **User Interceptors**:  Subscribers automatically track user actions (create, update, delete).
+
+swagger view 
+
+<img width="1680" alt="Screenshot 2025-04-11 at 10 04 46 AM" src="https://github.com/user-attachments/assets/7153c370-fd99-4227-bb03-b3ac483c6042" />
+
+<img width="1680" alt="Screenshot 2025-04-11 at 10 04 51 AM" src="https://github.com/user-attachments/assets/0502bd13-6b41-4430-902b-499e643d71a2" />
+
+<img width="1680" alt="Screenshot 2025-04-11 at 10 04 59 AM" src="https://github.com/user-attachments/assets/ff46bbf5-d36a-491f-a52b-0d03caea089e" />
+
 
 ## Technologies
 
