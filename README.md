@@ -23,11 +23,13 @@ user can run docker compose i have added db config
 
 swagger view 
 
-<img width="1680" alt="Screenshot 2025-04-11 at 10 04 46 AM" src="https://github.com/user-attachments/assets/7153c370-fd99-4227-bb03-b3ac483c6042" />
 
-<img width="1680" alt="Screenshot 2025-04-11 at 10 04 51 AM" src="https://github.com/user-attachments/assets/0502bd13-6b41-4430-902b-499e643d71a2" />
+<img width="1644" alt="Screenshot 2025-04-11 at 12 13 29 PM" src="https://github.com/user-attachments/assets/f33a1cf6-0069-4826-8a91-d39baa357138" />
 
-<img width="1680" alt="Screenshot 2025-04-11 at 10 04 59 AM" src="https://github.com/user-attachments/assets/ff46bbf5-d36a-491f-a52b-0d03caea089e" />
+<img width="1609" alt="Screenshot 2025-04-11 at 12 13 02 PM" src="https://github.com/user-attachments/assets/2bdd4608-e555-4fe9-946e-4e23681de4f3" />
+
+<img width="1617" alt="Screenshot 2025-04-11 at 12 12 33 PM" src="https://github.com/user-attachments/assets/56e25f54-276a-4332-a6ea-9a2a32abed50" />
+
 
 
 ## Technologies
